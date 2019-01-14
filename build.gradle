@@ -1,0 +1,74 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.2.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'idea'
+
+group = 'com.rkoneru.sample'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'commons-io:commons-io:2.6'
+    implementation 'org.modelmapper:modelmapper:2.3.2'
+
+    runtimeOnly 'com.h2database:h2'
+    compileOnly 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+
+sourceSets {
+    itest {
+        java {
+            compileClasspath += test.compileClasspath
+            runtimeClasspath += test.runtimeClasspath
+            srcDir 'src/itest/java'
+        }
+        resources {
+            srcDir 'src/itest/resources'
+        }
+    }
+}
+
+configurations {
+    itesCompile.extendsFrom testCompile
+    itestRuntime.extendsFrom testRuntime
+}
+
+idea {
+    module {
+        testSourceDirs += file('src/itest/java')
+        testResourceDirs += file('src/itest/resources')
+
+        scopes.TEST.plus += [configurations.itestCompile]
+    }
+}
+
+task integrationTest(type: Test) {
+    testClassesDirs = sourceSets.itest.output.classesDirs
+    classpath = sourceSets.itest.runtimeClasspath
+}
+
+check.dependsOn integrationTest
+integrationTest.mustRunAfter test
