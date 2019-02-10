@@ -25,7 +25,7 @@ public class EmployeeControllerIT {
 
     @Test
     public void shouldReturnEmployee() throws Exception {
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/employee/123");
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/employees/123");
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
 
         assertEquals("{\"id\":123}", mvcResult.getResponse().getContentAsString());
