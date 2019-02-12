@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+
 import com.rkoneru.sample.config.ModelMapperConfiguration;
 import com.rkoneru.sample.entity.EmployeeObjectMother;
 import com.rkoneru.sample.model.Employee;
@@ -21,7 +23,7 @@ public class EmployeeServiceTest {
 
     @Test
     public void shouldReturnEmployeeWithId123() {
-        when(mockEmployeeRepository.getOne(123L)).thenReturn(EmployeeObjectMother.create());
+        when(mockEmployeeRepository.findById(123L)).thenReturn(Optional.of(EmployeeObjectMother.create()));
 
         Employee employee = employeeService.getById(123L);
 

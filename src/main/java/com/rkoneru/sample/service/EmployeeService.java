@@ -1,5 +1,7 @@
 package com.rkoneru.sample.service;
 
+import java.util.Optional;
+
 import com.rkoneru.sample.model.Employee;
 import com.rkoneru.sample.repository.EmployeeRepository;
 import org.modelmapper.ModelMapper;
@@ -23,9 +25,8 @@ public class EmployeeService {
     }
 
     public Employee getById(Long employeeId) {
-        com.rkoneru.sample.entity.Employee employeeEntity = employeeRepository.getOne(employeeId);
-        logger.info("Employee retrieved from database {}", employeeEntity);
-//        return modelMapper.map(employeeEntity, Employee.EmployeeBuilder.class).build();
-        return Employee.builder().id(employeeEntity.getId()).build();
+        Optional<com.rkoneru.sample.entity.Employee> optionalEmployee = employeeRepository.findById(employeeId);
+        logger.info("Employee retrieved from database {}", optionalEmployee.isPresent() ? optionalEmployee.get() : null);
+        return modelMapper.map(optionalEmployee.get(), Employee.builder().getClass()).build();
     }
 }
