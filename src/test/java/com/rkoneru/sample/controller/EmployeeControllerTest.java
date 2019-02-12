@@ -16,7 +16,7 @@ public class EmployeeControllerTest {
 
     @Before
     public void setUp() {
-        responseEntity = employeeController.get(123L);
+        responseEntity = employeeController.getEmployeeById(123L);
     }
 
     @Test

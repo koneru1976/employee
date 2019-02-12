@@ -1,0 +1,8 @@
+spring:
+  jpa:
+    database: mysql
+    show-sql: true
+  datasource:
+    username: admin
+    password: Rk2012q!
+    url: jdbc:mysql://employees.czg39bdfwdv0.us-east-1.rds.amazonaws.com/employees

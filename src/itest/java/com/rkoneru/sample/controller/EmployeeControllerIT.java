@@ -2,7 +2,6 @@ package com.rkoneru.sample.controller;
 
 import static org.junit.Assert.assertEquals;
 
-import com.rkoneru.sample.model.Employee;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
