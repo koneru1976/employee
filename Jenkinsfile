@@ -2,13 +2,15 @@ pipeline {
     agent any
 
     stages {
-        stage('Compile') {
+        stage('Compile stage') {
             steps {
-                withGradle('gradle-5.2.1') {
-                    sh 'gradlew clean compile'
-                }
+                sh 'gradle clean compile'
             }
         }
-
+        stage('Unit testing stage') {
+            steps {
+                sh 'gradle test'
+            }
+        }
     }
 }
